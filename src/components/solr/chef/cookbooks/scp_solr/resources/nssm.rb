@@ -8,6 +8,7 @@ action :install do
     program new_resource.service_options['program']
     args new_resource.service_options['args']
     parameters new_resource.service_options['parameters']
+    nssm_binary '%ChocolateyInstall%\\bin\\nssm.exe'
     action [:install, :start]
   end
 end

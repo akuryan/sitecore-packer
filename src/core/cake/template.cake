@@ -187,7 +187,11 @@ void PackerTemplate_MergeJson(PackerTemplate template) {
       var manifest = ParseJsonFromFile(manifestFile);
       if (template.Builders.Any(item => item.IsMatching("virtualbox"))) {
         var parentBuildOutputFile = File(parentBuildDirectory + "/" + manifest["builds"][0]["files"][1]["name"].ToString());
-        jsonTemplateVariables["virtualbox_source_path"] = buildDirectory.GetRelativePath(parentBuildOutputFile).ToString();
+        jsonTemplateVariables["vm_source_path"] = buildDirectory.GetRelativePath(parentBuildOutputFile).ToString();
+      }
+      if (template.Builders.Any(item => item.IsMatching("hyperv"))) {
+        var parentBuildOutputFile = Directory(parentBuildDirectory + "/" + "output");
+        jsonTemplateVariables["vm_source_path"] = parentBuildOutputFile.ToString();
       }
     }
   }

@@ -1,0 +1,5 @@
+{
+  "variables": {
+    "hyperv_guest_os_type": "windows"
+  }
+}

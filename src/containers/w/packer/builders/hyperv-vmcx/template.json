@@ -1,0 +1,28 @@
+{
+  "variables": {
+    "vm_source_path": "",
+    "vm_floppy_files": "builders/hyperv-vmcx/floppy"
+  },
+  "builders": [
+    {
+      "type": "hyperv-vmcx",
+      "cpus":  "{{user `vm_cpus`}}",
+      "memory": "{{user `vm_memory`}}",
+      "vm_name": "{{user `author`}}-{{user `name`}}-{{user `version`}}-{{isotime \"200601020304\"}}",
+
+      "clone_from_vmcx_path": "{{user `vm_source_path`}}",
+      "floppy_files": "{{user `vm_floppy_files`}}",
+
+      "headless": "{{user `vm_headless`}}",
+      "boot_wait": "{{user `vm_boot_wait`}}",
+      "communicator": "{{user `vm_communicator`}}",
+      "winrm_username": "{{user `vm_winrm_username`}}",
+      "winrm_password": "{{user `vm_winrm_password`}}",
+      "winrm_timeout": "{{user `vm_winrm_timeout`}}",
+      "shutdown_command": "{{user `vm_shutdown_command`}}",
+      "output_directory": "{{user `output_directory`}}",
+      "switch_name": "EPAM",
+      "enable_secure_boot": true
+    }
+  ]
+}

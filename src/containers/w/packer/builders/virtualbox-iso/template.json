@@ -1,8 +1,8 @@
 {
   "variables": {
     "virtualbox_guest_os_type": "",
-    "virtualbox_disk_size": "61440",
-    "virtualbox_floppy_files": "builders/virtualbox-iso/floppy"
+    "vm_disk_size": "61440",
+    "vm_floppy_files": "builders/virtualbox-iso/floppy"
   },
   "builders": [
     {
@@ -17,13 +17,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "{{user `virtualbox_memory`}}"
+          "{{user `vm_memory`}}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "{{user `virtualbox_cpus`}}"
+          "{{user `vm_cpus`}}"
         ],
         [
           "modifyvm",
@@ -44,16 +44,16 @@
           "hyperv"
         ]
       ],
-      "disk_size": "{{user `virtualbox_disk_size`}}",
-      "floppy_files": "{{user `virtualbox_floppy_files`}}",
-      "headless": "{{user `virtualbox_headless`}}",
-      "boot_wait": "{{user `virtualbox_boot_wait`}}",
-      "communicator": "{{user `virtualbox_communicator`}}",
-      "winrm_username": "{{user `virtualbox_winrm_username`}}",
-      "winrm_password": "{{user `virtualbox_winrm_password`}}",
-      "winrm_timeout": "{{user `virtualbox_winrm_timeout`}}",
+      "disk_size": "{{user `vm_disk_size`}}",
+      "floppy_files": "{{user `vm_floppy_files`}}",
+      "headless": "{{user `vm_headless`}}",
+      "boot_wait": "{{user `vm_boot_wait`}}",
+      "communicator": "{{user `vm_communicator`}}",
+      "winrm_username": "{{user `vm_winrm_username`}}",
+      "winrm_password": "{{user `vm_winrm_password`}}",
+      "winrm_timeout": "{{user `vm_winrm_timeout`}}",
       "guest_additions_mode": "{{user `virtualbox_guest_additions_mode`}}",
-      "shutdown_command": "{{user `virtualbox_shutdown_command`}}",
+      "shutdown_command": "{{user `vm_shutdown_command`}}",
       "post_shutdown_delay": "{{user `virtualbox_post_shutdown_delay`}}",
       "output_directory": "{{user `output_directory`}}"
     }

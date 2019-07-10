@@ -1,0 +1,32 @@
+{
+  "variables": {
+    "hyperv_guest_os_type": "",
+    "vm_disk_size": "61440",
+    "vm_floppy_files": "builders/hyperv-iso/floppy"
+  },
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "cpus":  "{{user `vm_cpus`}}",
+      "memory": "{{user `vm_memory`}}",
+      "vm_name": "{{user `author`}}-{{user `name`}}-{{user `version`}}-{{isotime \"200601020304\"}}",
+
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+
+      "disk_size": "{{user `vm_disk_size`}}",
+      "floppy_files": "{{user `vm_floppy_files`}}",
+      "headless": "{{user `vm_headless`}}",
+      "boot_wait": "{{user `vm_boot_wait`}}",
+      "communicator": "{{user `vm_communicator`}}",
+      "winrm_username": "{{user `vm_winrm_username`}}",
+      "winrm_password": "{{user `vm_winrm_password`}}",
+      "winrm_timeout": "{{user `vm_winrm_timeout`}}",
+      "shutdown_command": "{{user `vm_shutdown_command`}}",
+      "output_directory": "{{user `output_directory`}}",
+      "switch_name": "EPAM",
+      "enable_secure_boot": true
+    }
+  ]
+}
