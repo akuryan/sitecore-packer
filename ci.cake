@@ -92,39 +92,6 @@ packerTemplates = packerTemplates.
   Concat(w16s_xc910_sxa181_storefront).
   ToList();
 
-var w16s_xc910 = PackerTemplates_Create("w16s-xc910", parents: w16s_sc911);
-var w16s_xc910_sxa181_storefront = PackerTemplates_Create("w16s-xc910_sxa181_storefront", parents: w16s_sc911);
-
-packerTemplates = packerTemplates
-  .Concat(w16s)
-  .Concat(w16s_dotnet)
-  .Concat(w16s_iis)
-  .Concat(w16s_sql16d)
-  .Concat(w16s_solr662)
-  .Concat(w16s_solr721)
-  .Concat(w16s_sc900)
-  .Concat(w16s_sc901)
-  .Concat(w16s_sc902)
-  .Concat(w16s_sc902_jss1100)
-  .Concat(w16s_sc902_sxa171_jss1100)
-  .Concat(w16s_sc902_sxa180)
-  .Concat(w16s_sc902_sxa180_jss1100)
-  .Concat(w16s_sc910)
-  .Concat(w16s_sc910_sxa180)
-  .Concat(w16s_sc910_jss1100)
-  .Concat(w16s_sc910_sxa180_jss1100)
-  .Concat(w16s_sc911)
-  .Concat(w16s_sc911_sxa181)
-  .Concat(w16s_sc911_jss1101)
-  .Concat(w16s_sc911_sxa181_jss1101)
-  .Concat(w16s_xc901)
-  .Concat(w16s_xc902)
-  .Concat(w16s_xc903)
-  .Concat(w16s_xc903_sxa180_storefront)
-  .Concat(w16s_xc910)
-  .Concat(w16s_xc910_sxa181_storefront)
-  .ToList();
-
 packerTemplate = configuration;
 packerRecursive = recursive;
 

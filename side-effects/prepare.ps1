@@ -5,6 +5,9 @@ mkdir C:\tmp -ErrorAction Continue
 mkdir C:\tmp\packer-chef-solo -ErrorAction Continue
 mkdir C:\tmp\packer-chef-solo\cache -ErrorAction Continue
 
+Write-Host "Reloading Path variable"
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+
 Write-Host "Installing Chef Client"
 # We might want to bump it later. Testing required
 choco install chef-client -y --version 13.4.24 #--version 15.0.300 --force
