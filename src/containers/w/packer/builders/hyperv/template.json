@@ -8,8 +8,6 @@
     "vm_winrm_username": "vagrant",
     "vm_winrm_password": "vagrant",
     "vm_winrm_timeout": "2h",
-    "vm_shutdown_command": "A:/shutdown.cmd",
-    "virtualbox_guest_additions_mode": "disable",
-    "virtualbox_post_shutdown_delay": "5s"
+    "vm_shutdown_command": "A:/shutdown.cmd"
   }
 }

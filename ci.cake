@@ -92,19 +92,60 @@ packerTemplates = packerTemplates.
   Concat(w16s_xc910_sxa181_storefront).
   ToList();
 
+var w16s_xc910 = PackerTemplates_Create("w16s-xc910", parents: w16s_sc911);
+var w16s_xc910_sxa181_storefront = PackerTemplates_Create("w16s-xc910_sxa181_storefront", parents: w16s_sc911);
+
+packerTemplates = packerTemplates
+  .Concat(w16s)
+  .Concat(w16s_dotnet)
+  .Concat(w16s_iis)
+  .Concat(w16s_sql16d)
+  .Concat(w16s_solr662)
+  .Concat(w16s_solr721)
+  .Concat(w16s_sc900)
+  .Concat(w16s_sc901)
+  .Concat(w16s_sc902)
+  .Concat(w16s_sc902_jss1100)
+  .Concat(w16s_sc902_sxa171_jss1100)
+  .Concat(w16s_sc902_sxa180)
+  .Concat(w16s_sc902_sxa180_jss1100)
+  .Concat(w16s_sc910)
+  .Concat(w16s_sc910_sxa180)
+  .Concat(w16s_sc910_jss1100)
+  .Concat(w16s_sc910_sxa180_jss1100)
+  .Concat(w16s_sc911)
+  .Concat(w16s_sc911_sxa181)
+  .Concat(w16s_sc911_jss1101)
+  .Concat(w16s_sc911_sxa181_jss1101)
+  .Concat(w16s_xc901)
+  .Concat(w16s_xc902)
+  .Concat(w16s_xc903)
+  .Concat(w16s_xc903_sxa180_storefront)
+  .Concat(w16s_xc910)
+  .Concat(w16s_xc910_sxa181_storefront)
+  .ToList();
+
 packerTemplate = configuration;
 packerRecursive = recursive;
 
 IEnumerable<PackerTemplate> PackerTemplates_Create(string type, bool amazon = false, IEnumerable<PackerTemplate> parents = null) {
   var items = new List<PackerTemplate>();
 
-  var virtualBoxCore = PackerTemplate_Create(
+  var virtualboxCore = PackerTemplate_Create(
     type,
     "virtualbox-core",
     new [] { PackerBuilder_Create(parents == null ? "virtualbox-iso" : "virtualbox-ovf") },
     new [] { PackerProvisioner_Create("chef") },
     new [] { PackerPostProcessor_Create("vagrant-virtualbox") },
     parents != null ? parents.First(item => item.IsMatching("virtualbox-core")) : null
+  );
+  var hypervCore = PackerTemplate_Create(
+    type,
+    "hyperv-core",
+    new [] { PackerBuilder_Create(parents == null ? "hyperv-iso" : "hyperv-vmcx") },
+    new [] { PackerProvisioner_Create("chef") },
+    new [] { PackerPostProcessor_Create("vagrant-hyperv") },
+    parents != null ? parents.First(item => item.IsMatching("hyperv-core")) : null
   );
   // var virtualBoxSysprep = PackerTemplate_Create(
   //   type,
@@ -114,7 +155,9 @@ IEnumerable<PackerTemplate> PackerTemplates_Create(string type, bool amazon = fa
   //   new [] { PackerPostProcessor_Create("vagrant-virtualbox") },
   //   virtualBoxCore
   // );
-  items.Add(virtualBoxCore);
+
+  items.Add(hypervCore);
+  items.Add(virtualboxCore);
   // items.Add(virtualBoxSysprep);
 
   return items;
