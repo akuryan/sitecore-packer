@@ -40,7 +40,7 @@ http://cakebuild.net
 
 [CmdletBinding()]
 Param(
-    [string]$Script = "ci.cake",
+    [string]$Script = "$PSScriptRoot\ci.cake",
     [Parameter(Position=1,Mandatory=$false)]
     [string]$Target = "default",
     [Parameter(Position=2,Mandatory=$false)]
