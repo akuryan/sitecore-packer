@@ -164,6 +164,62 @@ You are now ready to build a virtual machine image and a Vagrant box.
 [virtualboxinstallation]: https://www.virtualbox.org/wiki/Downloads/
 [packercaching]: https://www.packer.io/docs/other/environment-variables.html#packer_cache_dir
 
+Alternatively, you could use following commands in Windows Powershell to prepare your machine (including VMs in Azure) for building images:
+
+```powershell
+powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+choco install chefdk packer git notepadplusplus 7zip -y;
+```
+
+If you are running on VM in Azure - it is required to install and configure DHCP server to allow your built VM to access internet
+
+```powershell
+Install-WindowsFeature -Name NET-Framework-Core; Install-WindowsFeature DHCP -IncludeManagementTools; 
+```
+
+If you are building Hyper-V box - install Hyper-V and additional cmdlets to manage it
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All; Add-WindowsFeature RSAT-Hyper-V-Tools -IncludeAllSubFeature;
+```
+
+Now you shall reboot your machine. After reboot, proceed with configuration
+
+```powershell
+Import-Module DHCPServer;
+Add-DhcpServerv4Scope -name "PackerNet" -StartRange 192.168.168.100 -EndRange 192.168.168.200 -SubnetMask 255.255.255.0 -State Active;
+Set-DhcpServerv4OptionValue -Router 192.168.168.1 -ScopeID 192.168.168.0 -DnsServer 1.1.1.1;
+```
+
+If building Hyper-V box - create switch at Hyper-V to which your boxes will connect
+
+```powershell
+Import-Module "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\Hyper-V\2.0.0.0\Hyper-V.psd1";
+New-VMSwitch -SwitchName "EPAM" -SwitchType Internal;
+New-NetIPAddress -IPAddress 192.168.168.1 -PrefixLength 24 -InterfaceAlias "vEthernet (EPAM)";
+New-NetNat -Name "InternalNat" -InternalIPInterfaceAddressPrefix 192.168.168.0/24;
+```
+
+Further instructions assumes that you've mounted data disk, where your VMs are going to be built as `F:`. It will also open files, which requires manual editing in `notepad++`.
+
+```powershell
+mkdir f:\packerCache
+$env:PACKER_CACHE_DIR = "f:\packerCache"
+[Environment]::SetEnvironmentVariable("PACKER_CACHE_DIR", "f:\packerCache", "Machine");
+
+cd F:\
+git clone https://github.com/akuryan/sitecore-packer.git
+mkdir F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\attributes
+cp F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\secrets.md F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\attributes\secret.rb
+mkdir F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\files
+
+notepad++ F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\attributes\secret.rb
+notepad++ F:\sitecore-packer\src\components\sitecore\chef\cookbooks\scp_sitecore_common\files\license.xml
+notepad++ F:\sitecore-packer\src\components\sql\chef\cookbooks\scp_sql\attributes\2016_developer.rb
+
+F:\sitecore-packer\ci.ps1 build targetBox-virtProvider-vmState --recursive=true
+```
+
 ## Usage
 
 **Contents** [Building base images] | [Building images for distribution] | [Chaining builds further] | [Testing] | [Cleaning up]
