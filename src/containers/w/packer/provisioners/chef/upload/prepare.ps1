@@ -5,6 +5,8 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 Write-Host "Reloading Path variable"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
 Write-Host "Installing Chef Client"
 # We might want to bump it later. Testing required
 choco install chef-client -y --version 13.4.24 #--version 15.0.300 --force
