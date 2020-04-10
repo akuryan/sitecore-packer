@@ -16,3 +16,7 @@ choco install 7zip.portable -y
 Write-Host "Extracting cookbooks"
 7z x C:\packer-chef\cookbooks.tar.gz -o"C:\packer-chef" -aoa
 7z x C:\packer-chef\cookbooks.tar -o"C:\packer-chef" -aoa
+
+Write-Host "Allowing TLS 1.2 machine-wide";
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord;
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord;
